@@ -1,0 +1,10 @@
+svg {
+    width: 100%;
+    background-color: #f0f0f0;
+}
+
+.flow {
+    fill: none;
+    stroke: steelblue;
+    stroke-opacity: 0.7;
+}

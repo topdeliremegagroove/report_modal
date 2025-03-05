@@ -1,0 +1,28 @@
+// Charger la bibliothèque proj4js
+const proj4 = require('proj4');
+
+// Définir le système de coordonnées de départ (WGS 84) et de destination (EPSG:3857)
+const wgs84 = "+proj=longlat +datum=WGS84 +no_defs";  // Système de coordonnées de départ
+const webMercator = "+proj=merc +lon_0=0 +k=1 +x_0=0 +y_0=0 +datum=WGS84";  // EPSG:3857 (Web Mercator)
+
+// Les coordonnées des pays
+const countries = [
+    { "country": "Allemagne", "code": "DE", "coordinates": [10.4515, 51.1657] },
+    { "country": "Espagne", "code": "ES", "coordinates": [-3.7492, 40.4637] },
+    { "country": "Italie", "code": "IT", "coordinates": [12.4964, 41.9028] },
+    { "country": "Luxembourg", "code": "LU", "coordinates": [6.1296, 49.6117] },
+    { "country": "Belgique", "code": "BE", "coordinates": [4.4699, 50.5039] },
+    { "country": "Royaume-Uni", "code": "GB", "coordinates": [-0.1278, 51.5074] }
+];
+
+// Convertir les coordonnées de chaque pays de WGS 84 vers EPSG:3857
+const convertedCountries = countries.map(country => {
+    const [longitude, latitude] = country.coordinates; // [lon, lat]
+    const [x, y] = proj4(wgs84, webMercator, [longitude, latitude]);  // Conversion
+    return {
+        ...country,
+        coordinates: [x, y]  // Mettre à jour les coordonnées avec les nouvelles coordonnées projetées
+    };
+});
+
+console.log(convertedCountries);
